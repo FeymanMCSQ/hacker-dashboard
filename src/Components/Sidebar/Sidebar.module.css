@@ -1,0 +1,38 @@
+.menuBar {
+  width: 300px;
+  height: 100%;
+  background: linear-gradient(to right, rgb(9, 109, 134), rgb(99, 187, 197));
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: top;
+  justify-content: center;
+}
+
+.heading {
+  font-size: 30px;
+  margin: 10px;
+  color: white;
+  /* color: rgb(9, 109, 134); */
+}
+
+.menuItem {
+  margin: 10px;
+  /* color: black; */
+  color: white;
+  transition: 7.3s;
+  font-size: 25px;
+}
+
+.menuItem:hover {
+  text-decoration: underline;
+  /* color: black; */
+  color: white;
+}
+
+.line {
+  width: 280px;
+  /* background-color: black; */
+  background-color: white;
+  height: 1px;
+}
