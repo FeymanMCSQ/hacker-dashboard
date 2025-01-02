@@ -3,6 +3,7 @@ import Navbar from "../Navbar/Navbar";
 import styles from "./Dashboard.module.css";
 import { v4 as uuidv4 } from "uuid";
 import Sidebar from "../Sidebar/Sidebar";
+import Repotracker from "../Repotracker/Repotracker";
 
 const Dashboard = () => {
   const [tasks, SetTasks] = useState([]);
@@ -60,11 +61,7 @@ const Dashboard = () => {
   };
 
   const openSidebar = () => {
-    if (isSidebarOpen === false) {
-      setSidebarOpen(true);
-    } else {
-      setSidebarOpen(false);
-    }
+    setSidebarOpen(!isSidebarOpen);
   };
   const createWorkspace = () => {
     setTakingInput(true);
@@ -75,68 +72,73 @@ const Dashboard = () => {
   };
 
   return (
-    <>
-      {isSidebarOpen && <Sidebar />}
+    <div className={styles.bigbox}>
+      {isSidebarOpen && (
+        <Sidebar sideBarOpen={isSidebarOpen} openSidebarfunc={openSidebar} />
+      )}
 
       <div>
         <Navbar onCreateWorkspace={createWorkspace} SidebarOpen={openSidebar} />
-        <div className={styles.cardContainer}>
-          <div className={styles.cardHeader}>
-            <div className={styles.Name}>Task: </div>
-            <div className={styles.cardInfo}>
-              <div>Type: </div>
-              <div>Status: </div>
-              <div>Edit:</div>
+        <div className={styles.bigContainer}>
+          <div className={styles.cardContainer}>
+            <div className={styles.cardHeader}>
+              <div className={styles.Name}>Task: </div>
+              <div className={styles.cardInfo}>
+                <div>Type: </div>
+                <div>Status: </div>
+                <div>Edit:</div>
+              </div>
+              {/* This is the line */}
             </div>
-            {/* This is the line */}
-          </div>
-          {takingInput && (
-            <form className={styles.taskForm} onSubmit={createCard}>
-              <label htmlFor="Task">Task: </label>
-              <input
-                name="Task"
-                id="Task"
-                type="Task"
-                className={styles.taskInput}
-                onChange={changeTaskInfo}
-                required
-              ></input>
-              <label htmlFor="Type">Type: </label>
-              <input
-                name="type"
-                id="type"
-                type="type"
-                className={styles.taskInput}
-                onChange={changeTaskInfo}
-                required
-              ></input>
-              <button className={styles.formButton} type="submit">
-                Save
-              </button>
-            </form>
-          )}
-          <div className={styles.listDiv}>
-            {tasks.map((task) => (
-              <div key={task.id} className={styles.listitem}>
-                <div className={styles.cardText}>{task.Task}</div>
-                <div className={styles.cardThing}>
-                  <div className={styles.cardText}>{task.type}</div>
-                  <div className={styles.cardText}>{task.status}</div>
-                  <div>
-                    <button
-                      className={styles.cardButton}
-                      onClick={() => removeTask(task.id)}
-                    >
-                      Delete
-                    </button>
+            {takingInput && (
+              <form className={styles.taskForm} onSubmit={createCard}>
+                <label htmlFor="Task">Task: </label>
+                <input
+                  name="Task"
+                  id="Task"
+                  type="Task"
+                  className={styles.taskInput}
+                  onChange={changeTaskInfo}
+                  required
+                ></input>
+                <label htmlFor="Type">Type: </label>
+                <input
+                  name="type"
+                  id="type"
+                  type="type"
+                  className={styles.taskInput}
+                  onChange={changeTaskInfo}
+                  required
+                ></input>
+                <button className={styles.formButton} type="submit">
+                  Save
+                </button>
+              </form>
+            )}
+            <div className={styles.listDiv}>
+              {tasks.map((task) => (
+                <div key={task.id} className={styles.listitem}>
+                  <div className={styles.cardText}>{task.Task}</div>
+                  <div className={styles.cardThing}>
+                    <div className={styles.cardText}>{task.type}</div>
+                    <div className={styles.cardText}>{task.status}</div>
+                    <div>
+                      <button
+                        className={styles.cardButton}
+                        onClick={() => removeTask(task.id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
+          <Repotracker />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

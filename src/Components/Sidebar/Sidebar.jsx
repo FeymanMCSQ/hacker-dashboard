@@ -1,10 +1,16 @@
 import styles from "./Sidebar.module.css";
 import { slide as Menu } from "react-burger-menu";
 
-const Sidebar = () => {
+const Sidebar = ({ sideBarOpen, openSidebarfunc }) => {
   return (
-    <Menu className={styles.menuBar}>
-      <div className={styles.heading}>My App</div>
+    <Menu className={styles.menuBar} isOpen={sideBarOpen}>
+      <div className={styles.headingApp}>
+        <div className={styles.heading}>My App</div>
+        <button onClick={openSidebarfunc} className={styles.button}>
+          X
+        </button>
+      </div>
+
       <div className={styles.line}></div>
 
       <a className={styles.menuItem} href="/">

@@ -10,7 +10,7 @@
 }
 
 .heading {
-  font-size: 30px;
+  font-size: 25px;
   margin: 10px;
   color: white;
   /* color: rgb(9, 109, 134); */
@@ -20,7 +20,7 @@
   margin: 10px;
   /* color: black; */
   color: white;
-  transition: 7.3s;
+  transition: 0.3s;
   font-size: 25px;
 }
 
@@ -35,4 +35,15 @@
   /* background-color: black; */
   background-color: white;
   height: 1px;
+}
+.headingApp {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.button {
+  background: rgb(9, 109, 134);
+  color: white;
 }

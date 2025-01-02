@@ -1,0 +1,49 @@
+.Repo {
+  width: 18%;
+  background: white;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  box-shadow: 2px 2px;
+  border-radius: 10px;
+  margin: 10px;
+  justify-content: top;
+  align-items: center;
+  height: 600px;
+  overflow: scroll;
+}
+
+.RepoHeader {
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.Repo {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.Repo::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+.line {
+  background: black;
+  height: 1px;
+  width: 100%;
+}
+
+.bigList {
+  margin-top: 10px;
+}
+
+.listItem {
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.listCard {
+  margin: 3px;
+  font-weight: bold;
+}
