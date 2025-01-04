@@ -6,11 +6,12 @@ import SignUp from "./Components/Signup/Signup";
 import Login from "./Components/Login/Login";
 import Navbar from "./Components/Navbar/Navbar";
 import Dashboard from "./Components/Dashboard/Dashboard";
+import Homepage from "./Components/Homepage/Homepage";
 
 function App() {
   const [count, setCount] = useState(0);
 
-  return <Dashboard />;
+  return <Homepage />;
 }
 
 export default App;
