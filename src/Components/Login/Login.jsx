@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./Login.module.css";
 
 //This is the login React component
-const Login = () => {
+const Login = ({ setShowLogIn, setLogInEmail, setShowHomePage }) => {
   //Usestate is used to store data
   const [Data, setData] = useState();
   //Use state is used to toggle between login and signup
@@ -22,6 +22,8 @@ const Login = () => {
   //A useState function that detects changes in form and updates the
   //formData array
   const handleChange = (e) => {
+    console.log(formData);
+
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -60,9 +62,25 @@ const Login = () => {
           email: formData.email,
           password: formData.password,
         });
+        console.log(Data);
+        const response = await fetch("http://localhost:3001/api/login", {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+          setLogInEmail(formData.email);
+          setShowLogIn(false);
+          setShowHomePage(true);
+          alert("Login Successful");
+        } else {
+          const errorData = await response.json();
+          alert(`Log In Failed: ${errorData.message}`);
+        }
       } catch (error) {
         console.error(
-          "Error during signup:",
+          "Error during login:",
           error.response?.data?.message || error.message
         );
         // Check for specific error messages from backend

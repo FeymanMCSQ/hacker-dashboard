@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import Sidebar from "../Sidebar/Sidebar";
 import Repotracker from "../Repotracker/Repotracker";
 
-const Dashboard = () => {
+const Dashboard = ({ currentWorkSpace }) => {
   const [tasks, SetTasks] = useState([]);
   const [task, SetTask] = useState({
     Task: "",
@@ -13,6 +13,7 @@ const Dashboard = () => {
     status: "",
     id: "",
     time: "",
+    workSpaceId: "",
   });
   const [takingInput, setTakingInput] = useState(false);
   const [taskAdded, setIsTaskAdded] = useState(false);
@@ -27,6 +28,49 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
+    console.log("Muahahahahahahahah!!!");
+    getTasks();
+  }, []);
+
+  const getTasks = async () => {
+    console.log("You egg my house, I kill what you love!", currentWorkSpace);
+    try {
+      const response = await fetch(
+        `http://localhost:3001/api/taskFetch?workSpace=${encodeURIComponent(
+          currentWorkSpace
+        )}`,
+        {
+          method: "GET",
+          headers: { "Content-type": "application/json" },
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        SetTasks(data);
+        alert("Task fetch worked");
+        console.log("Hakunan Matata! ", data);
+      }
+    } catch (error) {
+      const errorData = response.json();
+      alert(`Couldn't fetch workspaces ${errorData.message}`);
+    }
+  };
+  const createTaskBackend = async () => {
+    const response = await fetch("http://localhost:3001/api/taskCreate", {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify(task),
+    });
+    if (response.ok) {
+      console.log("Ohhhh behave!!!!");
+    } else {
+      const errorData = await response.json();
+      alert(`Couldn't save task ${errorData.message}`);
+    }
+  };
+
+  useEffect(() => {
     if (task.id !== "") {
       setIsTaskAdded(true);
     }
@@ -36,6 +80,8 @@ const Dashboard = () => {
     if (taskAdded) {
       console.log(task);
       SetTasks((prevItems) => [...prevItems, task]);
+      //bitch, this chicken is cold
+      createTaskBackend();
       setIsTaskAdded(false);
       SetTask({
         ...task,
@@ -57,6 +103,7 @@ const Dashboard = () => {
       status: "Just Opened",
       id: uuidv4(),
       time: Date.now(),
+      workSpaceId: currentWorkSpace,
     }));
   };
 
@@ -67,8 +114,24 @@ const Dashboard = () => {
     setTakingInput(true);
   };
 
+  const removeTaskBackend = async (taskId) => {
+    console.log("Babe, check out the taskID: ", taskId);
+    const response = await fetch(`http://localhost:3001/api/taskDelete`, {
+      method: "DELETE",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({ taskId }),
+    });
+
+    if (response.ok) {
+      console.log("Babe the task is dead");
+    } else {
+      const errorData = await response.json();
+      alert(`Couldn't delete the task ${errorData.message}`);
+    }
+  };
   const removeTask = (taskId) => {
     SetTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+    removeTaskBackend(taskId);
   };
 
   return (
